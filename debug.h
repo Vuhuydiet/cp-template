@@ -26,6 +26,11 @@ using namespace std;
 
 // ----------------------------------------------------------------------------------------- //
 
+#define _B   LL
+#define _KB  1000LL;
+#define _MB  1000'000LL;
+#define _GB  1000'000'000LL;
+
 class __Printer {
 public:
     template <typename T>
@@ -129,7 +134,8 @@ private:
     }
 
 private:
-    const size_t _CAPACITY = 5e5; // 500 KB
+
+    const size_t _CAPACITY = 500 * _KB;
     size_t _counter = 0LL;
     char _space = ' ';
 
@@ -140,7 +146,7 @@ private:
 // ------------------------------------------------------------------------------- //
 
 template <typename T>
-inline __Printer& __printArr(const T* a, int n, const char* name, int line) {
+inline __Printer& __printArr(const T& a, int n, const char* name, int line) {
     __printer._set_space(-1);
     __printer << "[" << line << "] " << name << ": { ";
     for(int i = 0; i < n; i++) {
@@ -149,6 +155,27 @@ inline __Printer& __printArr(const T* a, int n, const char* name, int line) {
         __printer << "(" << i << ": " << a[i] << ")";
     }
     __printer << " }\n";
+    __printer._set_space();
+    return __printer;
+}
+
+template <typename T>
+inline __Printer& __printMat(const T& a, int n, int m, const char* name, int line) {
+    __printer._set_space(-1);
+    __printer << "[" << line << "] " << name << ": {\n";
+    
+    for(int i=0; i<n; i++) {
+        __printer << "   " << i << ": ";
+        for(int j=0; j<m; j++) {
+            if (j != 0)
+                __printer << ", ";
+            __printer << "(" << j << ": " << a[i][j] << ")";
+        }
+        __printer << "\n";
+
+    }
+
+    __printer << "}\n";
     __printer._set_space();
     return __printer;
 }
@@ -180,6 +207,7 @@ inline __Printer& __ldb_helper(int line) {
 // ------------- API -------------------------------------------------- //
 
 #define __printArr(x, n)        __printArr(x, n, #x, __LINE__)
+#define __printMat(x, n, m)     __printMat(x, n, m, #x, __LINE__)
 #define __print(x)              __print(x, #x, __LINE__)
 #define __println(x)            __println(x, #x, __LINE__)
 
