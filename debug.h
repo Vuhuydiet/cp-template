@@ -22,21 +22,26 @@ using namespace std;
 
 // ----------------------------------------------------------------------------------------- //
 
-#define __ostream_target cout
+#define _B   1LL
+#define _KB  1'000LL
+#define _MB  1'000'000LL
+#define _GB  1'000'000'000LL
 
 // ----------------------------------------------------------------------------------------- //
 
-#define _B   LL
-#define _KB  1000LL;
-#define _MB  1000'000LL;
-#define _GB  1000'000'000LL;
+#define __ostream_target cout
+
+#define __MAX_OUTPUT_SIZE (500 * _KB)
+
+// ----------------------------------------------------------------------------------------- //
 
 class __Printer {
 public:
     template <typename T>
     __Printer& operator<< (const T& __data) {
-        if (_counter >= _CAPACITY) 
+        if (_counter > _CAPACITY) 
             return *this;
+        clock_t start = clock();
 
         stringstream buffer;
         this->__print(buffer, __data);
@@ -50,10 +55,16 @@ public:
         }
         else {
             __ostream_target << "...\n";
-            _counter = _CAPACITY;
+            __ostream_target.flush();
+            _counter = _CAPACITY + 1;
         }
+
+        clock_t end = clock();
+        _debug_time += end - start;
         return *this;
     }
+
+    void _set_space(char space = ' ') { this->_space = space; }
 
     __Printer() {
         _start = clock();
@@ -62,10 +73,10 @@ public:
     ~__Printer() {
         _end = clock();
         __ostream_target << "\n----------------------------------------------\n";
-        __ostream_target << "[Time taken]: " << _end - _start << " ms\n";
+        __ostream_target << "[Time taken]: " << (_end - _start) << " ms\n";
+        __ostream_target << "[Time taken without debugging]: " << (_end - _start - _debug_time) << " ms\n";
+        __ostream_target.flush();
     }
-
-    void _set_space(char space = ' ') { this->_space = space;}
 
 private:
     template <typename T>
@@ -134,12 +145,12 @@ private:
     }
 
 private:
-
-    const size_t _CAPACITY = 500 * _KB;
+    const size_t _CAPACITY = __MAX_OUTPUT_SIZE;
     size_t _counter = 0LL;
     char _space = ' ';
 
     clock_t _start, _end;
+    clock_t _debug_time = 0L;
 
 } __printer;
 
@@ -172,7 +183,6 @@ inline __Printer& __printMat(const T& a, int n, int m, const char* name, int lin
             __printer << "(" << j << ": " << a[i][j] << ")";
         }
         __printer << "\n";
-
     }
 
     __printer << "}\n";
