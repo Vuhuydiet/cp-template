@@ -30,7 +30,7 @@ struct __Nothing { template <typename T> __Nothing& operator<<(const T& t) { ret
 #define vi                      vector<int>
 #define vii                     vector<pii>
 #define all(a)                  a.begin(), a.end()
-#define found(x, y)             (x.find(y) != x.end())
+#define found(ds, key)          (ds.find(key) != ds.end())
 #define nl                      "\n"
 
 using ll = long long;
@@ -45,8 +45,9 @@ template <typename T, typename V> bool smin(T& a, const V& b) { a = min(a, b); r
 
 // ----------------------------------- CODE ------------------------------------------ //
 
+const int32_t IINF = (int32_t)1e9 + 5;
 const ll INF = (ll)1e18 + 5;
-const int MOD = 998244353;
+const int MOD = 1e9 + 7;
 const double ESP = 1e-6;
 const int N = 3e5 + 5;
 
@@ -63,6 +64,7 @@ int n, m, k, q;
 
 
 void solve(int _case) {
+
 }
 
 END(Solution)
